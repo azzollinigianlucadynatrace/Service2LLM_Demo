@@ -1,4 +1,7 @@
-# Dynatrace + OpenTelemetry LLM Demo (Python) — **Multi‑Service Traces + Metrics**
+# Dynatrace + OpenTelemetry LLM OpenAI Demo (Python) — **Multi‑Service Traces + Metrics**
+
+This demo shows how to manually instrument raw REST LLM calls with OpenTelemetry spans (including GenAI semantic attributes) and export traces/metrics to Dynatrace via OTLP, plus how to **correctly propagate trace context across services** (including the critical propagator setup and header case normalization) so you can correlate end‑to‑end request paths.
+**OpenAI API based but easily replicable with other LLM Providers**
 
 This README walks you end‑to‑end through running the demo:
 
@@ -288,8 +291,3 @@ carrier = {key: value for key, value in request.headers}  # ❌ (still capitaliz
 
 ---
 
-
-
-## 13) What this demo teaches (in one paragraph)
-
-This demo shows how to manually instrument raw REST LLM calls with OpenTelemetry spans (including GenAI semantic attributes) and export traces/metrics to Dynatrace via OTLP, plus how to **correctly propagate trace context across services** (including the critical propagator setup and header case normalization) so you can correlate end‑to‑end request paths.
