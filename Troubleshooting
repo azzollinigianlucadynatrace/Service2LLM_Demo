@@ -1,0 +1,39 @@
+### 12.1 "401 Unauthorized" from Dynatrace
+
+- Ensure your token includes `openTelemetryTrace.ingest` (traces) and `metrics.ingest` (metrics).
+
+### 12.2 Metrics rejected (HTTP 400)
+
+Typical causes include:
+- Cumulative temporality (Dynatrace requires DELTA)
+- Too many dimensions
+- Unsupported metric types
+
+### 12.3 OpenAI authentication errors
+
+- Ensure your OpenAI key is valid and you copied it correctly.
+- Store the key as an environment variable / securely in your environment.
+
+### 12.4 Two Separate Traces (Split Traces)
+
+**Symptoms:**
+- Gateway trace has `POST /chat` + `POST /work` (CLIENT)
+- Worker trace has `POST /work` (SERVER) + `llm.chat.completions`
+- Different Trace IDs
+
+**Causes & Fixes:**
+
+| Cause | How to Check | Fix |
+|-------|-------------|-----|
+| Propagator not configured | `print(headers)` after `inject()` — no `traceparent` | Add `set_global_textmap()` in `common_otel.py` |
+| Header case mismatch | `print(carrier)` shows `Traceparent` (capital T) | Use `key.lower()` when building carrier |
+| Extracted context invalid | Print `span_ctx.is_valid` — shows `False` | Fix both above issues |
+
+### 12.5 No Service Flow Edge
+
+Even with connected traces, Service Flow may not show an edge if:
+- Service Detection v2 is not enabled (Settings → Service Detection → Span-based services)
+- Missing `peer.service` or `server.address` attributes on CLIENT span
+- Not enough traffic (widen the timeframe in Dynatrace)
+
+---
