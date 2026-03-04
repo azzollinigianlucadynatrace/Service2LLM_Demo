@@ -138,14 +138,7 @@ OTEL_PROPAGATORS=tracecontext,baggage
 
 ---
 
-## 7) IMPORTANT: Metrics temporality (Using DELTA)
-
-Dynatrace OTLP metrics ingest ** delta temporality** for counters and histograms. 
-This demo already enforces DELTA for Counters/Histograms in code (in `common_otel.py`) using exporter preferred temporality.
-
----
-
-## 8) Run the demo (two terminals)
+## 7) Run the demo (two terminals)
 
 > Make sure the virtual environment is activated in **each** terminal.
 
@@ -177,7 +170,7 @@ Gateway running on http://127.0.0.1:5001/chat  -> worker: http://127.0.0.1:5002/
 
 ---
 
-## 9) Generate traffic (3 prompts, 1 round)
+## 8) Generate traffic (3 prompts, 1 round)
 
 ### Terminal 3 — run the client
 
@@ -190,23 +183,23 @@ This sends 3 prompts (1 round) and stops.
 
 ---
 
-## 10) Verify in Dynatrace
+## 9) Verify in Dynatrace
 
-### 10.1 Traces
+### 9.1 Traces
 
 1. Go to **Distributed traces**.
 2. Filter by service name:
    - `llm-demo-gateway`
    - `llm-demo-worker`
 
-### 10.2 Endpoints
+### 9.2 Endpoints
 
 Dynatrace creates endpoints (entry points) from **SERVER** spans.
 You should see endpoints like:
 - `POST /chat` (Gateway)
 - `POST /work` (Worker)
 
-### 10.3 AI / GenAI spans
+### 9.3 AI / GenAI spans
 
 In the Worker trace, open the span named `llm.chat.completions` and inspect GenAI attributes:
 
@@ -214,7 +207,7 @@ In the Worker trace, open the span named `llm.chat.completions` and inspect GenA
 - `gen_ai.request.model`
 - `gen_ai.usage.total_tokens`
 
-### 10.4 Metrics
+### 9.4 Metrics
 
 Go to **Metrics / Data explorer** and search for these demo metric names:
 
@@ -230,7 +223,7 @@ Note: Dynatrace may suffix metric keys based on payload (for example counters ma
 
 ---
 
-## 11) CRITICAL: Making Service Flow Connect Gateway ➜ Worker
+## 10) CRITICAL: Making Service Flow Connect Gateway ➜ Worker
 
 Service-to-service visualization requires correct **trace context propagation** across the HTTP call between Gateway and Worker.
 
