@@ -223,7 +223,7 @@ Note: Dynatrace may suffix metric keys based on payload (for example counters ma
 
 ---
 
-## 10) CRITICAL: Making Service Flow Connect Gateway ➜ Worker
+## 10) Important: Making Service Flow Connect Gateway ➜ Worker
 
 Service-to-service visualization requires correct **trace context propagation** across the HTTP call between Gateway and Worker.
 
